@@ -9,7 +9,7 @@ const path = require('path');
 const ejs = require('ejs');
 
 const toolsJS = require('./services/tools.js');
-const dataJS = require('./services/data.js');
+const pagesJS = require('./services/pages.js');
 const saveDataFileName = './services/save_data.json';
 const saveData = require(saveDataFileName);
 
@@ -53,7 +53,7 @@ app.all('*', (req, res, next) => {
 		toolsJS.log('html', `got a request on: ${url}`);
 		next();
 	} else {
-		res.status(404).render(path.join(__dirname, 'pages', dataJS.pages['404'].directory, 'index.html'), { host: host, statics: static_files, page: dataJS.pages['404'].directory });
+		res.status(404).render(path.join(__dirname, 'pages', pagesJS.pages['404'].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages['404'].directory });
 	}
 });
 
@@ -67,9 +67,9 @@ app.get('/p/:page', (req, res) => {
 	var page = req.params.page;
 
 	try {
-		if (fs.existsSync(path.join(__dirname, 'pages', dataJS.pages[page].directory, 'index.html'))) { /* file exists */ }
+		if (fs.existsSync(path.join(__dirname, 'pages', pagesJS.pages[page].directory, 'index.html'))) { /* file exists */ }
 	} catch (err) {
-		res.status(404).render(path.join(__dirname, 'pages', dataJS.pages['404'].directory, 'index.html'), { host: host, statics: static_files, page: dataJS.pages['404'].directory });
+		res.status(404).render(path.join(__dirname, 'pages', pagesJS.pages['404'].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages['404'].directory });
 		return;
 	}
 
@@ -80,15 +80,15 @@ app.get('/p/:page', (req, res) => {
 			toolsJS.log('uptime', 'uptime robot successfully monitored!');
 		}
 
-		res.status(200).render(path.join(__dirname, 'pages', dataJS.pages[page].directory, 'index.html'), { host: host, statics: static_files, page: dataJS.pages[page].directory});
+		res.status(200).render(path.join(__dirname, 'pages', pagesJS.pages[page].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages[page].directory});
 	} else {
-		res.status(404).render(path.join(__dirname, 'pages', dataJS.pages['restricted'].directory, 'index.html'), { host: host, statics: static_files, page: dataJS.pages['restricted'].directory });
+		res.status(404).render(path.join(__dirname, 'pages', pagesJS.pages['restricted'].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages['restricted'].directory });
 	}
 });
 
 // all other urls -> 404 error
 app.get('*', (req, res) => {
-	res.status(404).render(path.join(__dirname, 'pages', dataJS.pages['404'].directory, 'index.html'), { host: host, statics: static_files, page: dataJS.pages['404'].directory });
+	res.status(404).render(path.join(__dirname, 'pages', pagesJS.pages['404'].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages['404'].directory });
 });
 
 //  [==================]   Socket.IO   [==================]
