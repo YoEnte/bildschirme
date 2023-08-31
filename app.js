@@ -59,7 +59,8 @@ app.all('*', (req, res, next) => {
 
 // landing page
 app.get('/', (req, res) => {
-	res.redirect('/p/home');
+	var homePage = 'home';
+	res.status(200).render(path.join(__dirname, 'pages', pagesJS.pages[homePage].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages[homePage].directory});
 });
 
 // any other page
