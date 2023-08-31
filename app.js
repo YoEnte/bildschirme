@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 });
 
 // any other page
-app.get('/p/:page', (req, res) => {
+app.get('/:page', (req, res) => {
 	var page = req.params.page;
 
 	try {
