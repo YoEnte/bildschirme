@@ -19,7 +19,7 @@ const port = 4000;
 app.enable('strict routing');
 
 // static files
-const host = `https://localhost:${port}`;
+const host = `http://localhost:${port}`;
 
 const static_files = 'files';
 app.use('/files/', express.static(path.join(__dirname, 'pages')));
@@ -94,93 +94,6 @@ app.get('*', (req, res) => {
 //  [==================]   Socket.IO   [==================]
 io.on('connect', (socket) => {
 	toolsJS.log('socket', `${socket.id} connected to the server`);
-
-	socket.emit('sendData', saveData, {
-		emit: 'socket',
-		close: false, msgIfSender: 'Daten vom Server geladen.',
-	}); // send save_data.json as obj
-
-	// list manager
-	socket.on('saveItem', (socketData) => { // [original, title, content]
-
-		var error = false;
-		if (socketData[0] != '') {		// modify
-			
-			// check doubles for modify
-			var originalIndex = undefined;
-			for (var i = 0; i < saveData.data.length; i++) {
-
-				// if double and title changed
-				if (saveData.data[i].title == socketData[1] && socketData[0] != socketData[1]) {
-					error = true;
-					break;
-				}
-
-				// find index of original
-				if (saveData.data[i].title == socketData[0]) {
-					originalIndex = i;
-				}
-			}
-
-			if (originalIndex == undefined) {
-				error = true;
-			}
-
-			if (!error) {
-				saveData.data[originalIndex] = {title: socketData[1], content: socketData[2]};
-				fs.writeFileSync(saveDataFileName, JSON.stringify(saveData));
-			}
-			
-		} else {						// add
-			
-			// check doubles for add
-			for (var i = 0; i < saveData.data.length; i++) {
-
-				// if double
-				if (saveData.data[i].title == socketData[1]) {
-					error = true;
-					break;
-				}
-			}
-
-			if (!error) {
-				saveData.data.push({title: socketData[1], content: socketData[2]});
-				fs.writeFileSync(saveDataFileName, JSON.stringify(saveData));
-			}
-		}
-
-		if (!error) {
-			
-			io.emit('sendData', saveData, {
-				emit: 'io', senderId: socket.id, changes: [...socketData],
-				close: false, msgIfSender: 'Element erfolgreich gespeichert.', msgIfNotSender: 'Daten vom Server geladen.'
-			});
-		} else {
-	
-			socket.emit('sendData', saveData, {
-				emit: 'socket',
-				close: false, msgIfSender: 'Ein Fehler ist aufgetreten!',
-			});
-		}
-	});
-	
-	socket.on('deleteItem', (socketData) => {
-
-		for (var i = 0; i < saveData.data.length; i++) {
-
-			if (saveData.data[i].title == socketData) {
-
-				saveData.data.splice(i, 1);
-				fs.writeFileSync(saveDataFileName, JSON.stringify(saveData));
-				break;
-			}
-		}
-
-		io.emit('sendData', saveData, {
-			emit: 'io', senderId: socket.id, 
-			close: true, msgIfSender: 'Element erfolgreich gelöscht.', msgIfNotSender: 'Daten vom Server geladen.'
-		});
-	});
 
 	socket.on('disconnect', () => {
 		toolsJS.log('socket', `${socket.id} disconnected from the server`);

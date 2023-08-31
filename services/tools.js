@@ -26,3 +26,12 @@ function log(type, data) {
     return;
 }
 exports.log = log;
+
+function imageToBase64(imagePath) {
+    fs.readFile(imagePath, (err, data) => {
+        if (err) throw err;
+        var base64Image = Buffer.from(data, 'binary').toString('base64');
+        console.log(base64Image)
+    });
+}
+exports.imageToBase64 = imageToBase64;
