@@ -8,4 +8,10 @@ exports.pages = {
     home: {
         directory: 'home',
     },
+    screens: {
+        directory: 'screens',
+    },
+    dashboard: {
+        directory: 'dashboard',
+    },
 };
