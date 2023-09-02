@@ -1,5 +1,13 @@
 body {
     display: flex;
+    justify-content: center;
+}
+
+#heading {
+    position: absolute;
+    font-size: calc(100% + 5vw);
+    font-weight: bold;
+    top: 3vh;
 }
 
 .sideblock {
@@ -17,21 +25,42 @@ body {
     background-color: aqua;
 }
 
-.select_link {
-    width: 20vw;
-    height: 20vw;
-    background-color: black;
-}
-
 .link_box {
     position: relative;
 }
 
+.select_link {
+    width: 20vw;
+    height: 20vw;
+    background-color: lightcoral;
+    display: flex;
+    align-items: center;
+}
+
+.select_link .link_text {
+    width: 100%;
+    bottom: 0;
+    font-size: 2vw;
+    position: absolute;
+    background-color: yellowgreen;
+    font-weight: bold;
+    text-align: center;
+}
+
+.link_icon {
+    width: 100%;
+    height: fit-content;
+    font-size: 10px;
+    background-color: yellowgreen;
+    font-weight: bold;
+    text-align: center;
+}
+
 .fulllink {
-    position:absolute; 
-    width:100%;
-    height:100%;
-    top:0;
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    top: 0;
     left: 0;
 
     z-index: 1;
