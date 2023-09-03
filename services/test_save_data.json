@@ -1,0 +1,36 @@
+{
+    "images": {
+        "kgs_start": {
+            "data": 0
+        }
+    },
+    "slide_shows": {
+        "test01": {
+            "images": [
+                {
+                    "img": "kgs_start",
+                    "duration": 3
+                }
+            ]
+        }
+    },
+    "screens": {
+        "links": {
+            "slideshow":"test02"
+        }
+    },
+    "users": {
+        "YoEnte": {
+            "password": "adminENTE2199",
+            "permission": "admin"
+        },
+        "Jp": {
+            "password": "k^&PU6pXvqF=",
+            "permission": "leitung"
+        },
+        "viewtest": {
+            "password": "test",
+            "permission": "view"
+        }
+    }
+}

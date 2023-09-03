@@ -11,7 +11,7 @@
     user-select: none;
 }
 
-/* hide scroll bar on body */
+/* hide scroll bar on body + no margin */
 body::-webkit-scrollbar {
     display: none;
 }
