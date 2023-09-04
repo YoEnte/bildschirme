@@ -26,4 +26,5 @@ body {
     height: 100px;
     background-color: cadetblue;
     position: absolute;
+    visibility: hidden;
 }
