@@ -21,7 +21,7 @@ const port = 4000;
 app.enable('strict routing');
 
 // static files
-const host = `http://192.168.178.69:${port}`;
+const host = `http://localhost:${port}`;
 
 const static_files = 'files';
 app.use('/files/', express.static(path.join(__dirname, 'pages')));

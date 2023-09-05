@@ -20,11 +20,3 @@ body {
     opacity: 0.5;
     visibility: hidden;
 }
-
-.test {
-    width: 100px;
-    height: 100px;
-    background-color: cadetblue;
-    position: absolute;
-    visibility: hidden;
-}
