@@ -10,10 +10,19 @@ const ejs = require('ejs');
 
 const toolsJS = require('./services/tools.js');
 const pagesJS = require('./services/pages.js');
-const saveDataFileName = './services/save_data.json';
+
 const testSaveDataFileName = './services/test_save_data.json';
-const saveData = require(saveDataFileName);
 const testSaveData = require(testSaveDataFileName);
+
+const saveDataDirectory = './services/save_data/';
+const saveDataImagesFile = 'images.json';
+const saveDataScreensFile = 'screens.json';
+const saveDataSlideShowsFile = 'slideshows.json';
+const saveDataUsersFile = 'users.json';
+const saveDataImages = require(path.join(__dirname, saveDataDirectory, saveDataImagesFile));
+const saveDataScreens = require(path.join(__dirname, saveDataDirectory, saveDataScreensFile));
+const saveDataSlideShows = require(path.join(__dirname, saveDataDirectory, saveDataSlideShowsFile));
+const saveDataUsers = require(path.join(__dirname, saveDataDirectory, saveDataUsersFile));
 
 const port = 4000;
 
@@ -48,7 +57,7 @@ app.all('*', (req, res, next) => {
 	}
 
 	if (['/favicon.ico'].includes(url)) {
-		res.status(404);
+		trailing_good = false;
 	}
 
 	if (trailing_good) {
@@ -63,6 +72,10 @@ app.all('*', (req, res, next) => {
 app.get('/', (req, res) => {
 	var homePage = 'home';
 	res.status(200).render(path.join(__dirname, 'pages', pagesJS.pages[homePage].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages[homePage].directory});
+});
+
+app.get('/uptime', (req, res) => {
+	res.status(200).render(path.join(__dirname, 'pages', pagesJS.pages['uptime'].directory, 'index.html'), { host: host, statics: static_files, page: pagesJS.pages['uptime'].directory});
 });
 
 // any other page
@@ -95,12 +108,65 @@ app.get('*', (req, res) => {
 });
 
 //  [==================]   Socket.IO   [==================]
+var screens_loggedIn = {
+
+};
+
 io.on('connect', (socket) => {
 	toolsJS.log('socket', `${socket.id} connected to the server`);
 
 	socket.on('disconnect', () => {
 		toolsJS.log('socket', `${socket.id} disconnected from the server`);
 	});
+
+	socket.on('screen_login', (data) => {
+		if (saveDataScreens[data.login] == undefined) {
+			socket.emit('error', {message: 'login failed'});
+			return;
+		}
+
+		screens_loggedIn[socket.id] = data.login;
+		socket.emit('login', {status: 'passed', screen: data.login});
+	});
+
+	socket.on('screen_fetch_slideName', () => {
+
+		var account = screens_loggedIn[socket.id];
+
+		socket.emit('slideName', {slideName: saveDataScreens[account].slideshow});
+	});
+
+	socket.on('screen_fetch_slideShow', (data) => {
+		if (false) {
+			socket.emit('error', {message: 'slideshow fetch failed'});
+			return;
+		}
+
+		var slideShow;
+
+		if (data.slideName == undefined) {
+			slideShow = saveDataSlideShows[saveDataScreens[screens_loggedIn[socket.id]]];
+		} else {
+			slideShow = saveDataSlideShows[data.slideName];
+		}
+
+		account = screens_loggedIn[socket.id];
+
+		socket.emit('slideShow', {slideShow: slideShow});
+	});
+
+	socket.on('screen_fetch_images', (data) => {
+		if (false) {
+			socket.emit('error', {message: 'slideshow fetch failed'});
+			return;
+		}
+
+		var urls = {};
+		for (i of data.images) {
+			urls[i] = saveDataImages[i];
+		}
+		socket.emit('images', {urls: urls});
+	})
 });
 
 

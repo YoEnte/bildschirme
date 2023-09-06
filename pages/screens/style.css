@@ -1,15 +1,13 @@
-#image_div {
+#screen_con {
     width: 100vw;
     height: 100vh;
     position: absolute;
-    background-image: url('/files/_general_files/images/willkommen.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
 }
 
-body {
-    background-color: aqua;
+#screen_con img {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
 }
 
 #overlay {

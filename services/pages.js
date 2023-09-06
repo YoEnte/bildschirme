@@ -3,6 +3,9 @@ exports.pages = {
     404: {
         directory: 'error',
     },
+    uptime: {
+        directory: 'uptime',
+    },
     
     // content pages
     home: {

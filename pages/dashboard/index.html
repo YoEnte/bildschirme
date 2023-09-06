@@ -5,17 +5,16 @@
 		<link href="<%= host %>/<%= statics %>/<%= page %>/style.css" rel="stylesheet" /> <!-- style sheet-->
 		<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"> <!-- standard font -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- icons / symboles -->
+        <script>
+            var ejsHost    = '<%=  host     %>';
+            var ejsStatics = '<%=  statics  %>';
+            var ejsPage    = '<%=  page     %>';
+        </script>
         <script src="/socket.io/socket.io.js"></script> <!-- import socket.io -->
-        <script src="<%= host %>/<%= statics %>/_general_files/socket_worker.js"></script>
         <script src="<%= host %>/<%= statics %>/<%= page %>/script.js"></script> <!-- import main script -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- meta for mobile -->
 	</head>
     <body>
 		test :)
     </body>
-    <script>
-        var ejsHost    = '<%=  host     %>';
-        var ejsStatics = '<%=  statics  %>';
-        var ejsPage    = '<%=  page     %>';
-    </script>
 </html>

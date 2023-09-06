@@ -5,6 +5,11 @@
 		<link href="<%= host %>/<%= statics %>/<%= page %>/style.css" rel="stylesheet" /> <!-- style sheet-->
 		<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"> <!-- standard font -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- meta for mobile -->
+        <script>
+            var ejsHost    = '<%=  host     %>';
+            var ejsStatics = '<%=  statics  %>';
+            var ejsPage    = '<%=  page     %>';
+        </script>
 	</head>
     <body>
 		<div>
@@ -12,9 +17,4 @@
 			<span> <a href="../">Zurück zur Startseite </a> </span>
 		</div>
     </body>
-    <script>
-        var ejsHost    = '<%=  host     %>';
-        var ejsStatics = '<%=  statics  %>';
-        var ejsPage    = '<%=  page     %>';
-    </script>
 </html>

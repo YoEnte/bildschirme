@@ -1,0 +1,37 @@
+{
+    "test01": {
+        "checksum": "test01-check",
+        "content": [
+            {
+                "image": "willkommen01",
+                "duration": 3
+            },
+            {
+                "image": "test01",
+                "duration": 5
+            }
+        ]
+    },
+    "test02": {
+        "checksum": "test02-check",
+        "content": [
+            {
+                "image": "test01",
+                "duration": 60
+            }
+        ]
+    },
+    "haupt01": {
+        "checksum": "haupt01-check",
+        "content": [
+            {
+                "image": "willkommen01",
+                "duration": 20
+            },
+            {
+                "image": "athene01",
+                "duration": 20
+            }
+        ]
+    }
+}
