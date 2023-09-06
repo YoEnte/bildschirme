@@ -15,6 +15,34 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- meta for mobile -->
 	</head>
     <body>
-		test :)
+        <div id="login_con" class="fullscreen">
+            <input id="user" placeholder="Nutzername">
+            <input id="password" placeholder="Passwort">
+            <button onclick="login()">Abschicken</button>
+        </div>
+
+        <div id="dashboard_con" class="fullscreen">
+
+            <div id="start_con" class="fullscreen">
+
+            </div>
+            <div id="screens_con" class="fullscreen">
+
+            </div>
+            <div id="images_con" class="fullscreen">
+
+            </div>
+            <div id="slideShows_con" class="fullscreen">
+
+            </div>
+
+            <div id="button_con">
+                <button onclick="tab_start()" class="selector">Startmenü</button>
+                <button onclick="tab_screens()" class="selector">Bildschirme</button>
+                <button onclick="tab_images()" class="selector">Bilder</button>
+                <button onclick="tab_slideShows()" class="selector">Slideshows</button>
+                <button onclick="logout()" class="selector">Ausloggen</button>
+            </div>
+        </div>
     </body>
 </html>

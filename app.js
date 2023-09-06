@@ -108,15 +108,15 @@ app.get('*', (req, res) => {
 });
 
 //  [==================]   Socket.IO   [==================]
-var screens_loggedIn = {
-
-};
+var screens_loggedIn = {};
+var users_loggedIn = {};
 
 io.on('connect', (socket) => {
 	toolsJS.log('socket', `${socket.id} connected to the server`);
 
 	socket.on('disconnect', () => {
 		toolsJS.log('socket', `${socket.id} disconnected from the server`);
+		screen_logout();
 	});
 
 	socket.on('screen_login', (data) => {
@@ -126,14 +126,28 @@ io.on('connect', (socket) => {
 		}
 
 		screens_loggedIn[socket.id] = data.login;
-		socket.emit('login', {status: 'passed', screen: data.login});
+		console.log(screens_loggedIn);
+		socket.emit('screen_login', {status: 'passed', screen: data.login});
 	});
 
+	socket.on('screen_logout', (data) => {
+		screen_logout();
+	});
+
+	function screen_logout() {
+		delete screens_loggedIn[socket.id];
+		console.log(screens_loggedIn);
+	}
+
 	socket.on('screen_fetch_slideName', () => {
+		if (false) {
+			socket.emit('error', {message: 'slideshow fetch failed'});
+			return;
+		}
 
 		var account = screens_loggedIn[socket.id];
 
-		socket.emit('slideName', {slideName: saveDataScreens[account].slideshow});
+		socket.emit('screen_slideName', {slideName: saveDataScreens[account].slideshow});
 	});
 
 	socket.on('screen_fetch_slideShow', (data) => {
@@ -152,7 +166,7 @@ io.on('connect', (socket) => {
 
 		account = screens_loggedIn[socket.id];
 
-		socket.emit('slideShow', {slideShow: slideShow});
+		socket.emit('screen_slideShow', {slideShow: slideShow});
 	});
 
 	socket.on('screen_fetch_images', (data) => {
@@ -165,8 +179,77 @@ io.on('connect', (socket) => {
 		for (i of data.images) {
 			urls[i] = saveDataImages[i];
 		}
-		socket.emit('images', {urls: urls});
-	})
+		socket.emit('screen_images', {urls: urls});
+	});
+
+
+
+	socket.on('user_fetch_login', (data) => {
+		if (saveDataUsers[data.user] == undefined) {
+			socket.emit('error', {message: 'login failed, wrong user'});
+			return;
+		}
+
+		if (data.password != saveDataUsers[data.user].password) {
+			socket.emit('error', {message: 'login failed, wrong password'});
+			return;
+		}
+
+		users_loggedIn[socket.id] = data.user;
+		socket.emit('user_login', {status: 'passed', user: data.user});
+	});
+
+	socket.on('user_fetch_screens', (data) => {
+		if (false) {
+			socket.emit('error', {message: 'slideshow fetch failed'});
+			return;
+		}
+
+		socket.emit('user_screens', {screens: saveDataScreens});
+	});
+
+	socket.on('user_change_screens', (data) => {
+		if (users_loggedIn[socket.id] == undefined) {
+			socket.emit('error', {message: 'failed, not logged in'});
+			return;
+		}
+	});
+
+
+
+	socket.on('user_fetch_images', (data) => {
+		if (false) {
+			socket.emit('error', {message: 'slideshow fetch failed'});
+			return;
+		}
+
+		socket.emit('user_images', {images: saveDataImages});
+	});
+
+	socket.on('user_change_images', (data) => {
+		if (users_loggedIn[socket.id] == undefined) {
+			socket.emit('error', {message: 'failed, not logged in'});
+			return;
+		}
+	});
+
+
+
+	socket.on('user_fetch_slideShows', (data) => {
+		if (false) {
+			socket.emit('error', {message: 'slideshow fetch failed'});
+			return;
+		}
+
+		socket.emit('user_slideShows', {slideShows: saveDataSlideShows});
+	});
+
+	socket.on('user_change_slideShows', (data) => {
+		if (users_loggedIn[socket.id] == undefined) {
+			socket.emit('error', {message: 'failed, not logged in'});
+			return;
+		}
+	});
 });
 
 

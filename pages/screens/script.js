@@ -1,6 +1,7 @@
 var socket = io();
 
 var loggedIn = false;
+var screen;
 var slideName;
 var slideShow;
 
@@ -12,13 +13,13 @@ var documentLoaded = false;
 var counter = 0;
 var selected = 0;
 
-var screen;
+var screenCon;
 
 addEventListener('DOMContentLoaded', (event) => {
     documentLoaded = true;
 
-    screen = document.querySelector('#screen_con');
-    console.log(screen)
+    screenCon = document.querySelector('#screen_con');
+    console.log(screenCon)
 });
 
 var interval1000 = setInterval(function() {
@@ -36,8 +37,8 @@ var interval1000 = setInterval(function() {
             newSrc = images[slideShow.content[selected].image];
             console.log(newSrc);
 
-            screen.appendChild(newSrc);
-            screen.removeChild(screen.firstElementChild);
+            screenCon.appendChild(newSrc);
+            screenCon.removeChild(screenCon.firstElementChild);
 
         } else {
             counter++;
@@ -60,10 +61,11 @@ socket.on('error', (data) => {
 	console.log(data.message);
 });
 
-socket.on('login', (data) => {
+socket.on('screen_login', (data) => {
     if (data.status == 'passed') {
         console.log('logged in as', data.screen);
         loggedIn = true;
+        screen = data.screen;
         fetchSlideName();
     }
 });
@@ -72,7 +74,7 @@ function fetchSlideName() {
     socket.emit('screen_fetch_slideName');
 }
 
-socket.on('slideName', (data) => {
+socket.on('screen_slideName', (data) => {
     console.log('got slidename:', data.slideName);
     slideName = data.slideName;
     fetchSlideShow();
@@ -82,7 +84,7 @@ function fetchSlideShow() {
     socket.emit('screen_fetch_slideShow', {slideName: slideName});
 }
 
-socket.on('slideShow', (data) => {
+socket.on('screen_slideShow', (data) => {
     console.log('got slideshow:', data.slideShow);
     slideShow = data.slideShow;
     fetchImages();
@@ -101,7 +103,7 @@ function fetchImages() {
     socket.emit('screen_fetch_images', {images: imgs})
 }
 
-socket.on('images', (data) => {
+socket.on('screen_images', (data) => {
     console.log('got image urls:', data.urls);
 
     for (i of Object.keys(data.urls)) {

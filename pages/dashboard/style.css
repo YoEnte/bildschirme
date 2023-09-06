@@ -1,0 +1,38 @@
+.fullscreen {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+
+#login_con {
+    visibility: visible;
+}
+
+#dashboard_con {
+    visibility: hidden;
+}
+
+#button_con {
+    position: absolute;
+}
+
+#start_con {
+    visibility: hidden;
+    background: #9e2386;
+}
+
+#screens_con {
+    visibility: hidden;
+    background: #a2a2a2;
+}
+
+#images_con {
+    visibility: hidden;
+    background: #987654;
+}
+
+#slideShows_con {
+    visibility: hidden;
+    background: #6789ab;
+}
+

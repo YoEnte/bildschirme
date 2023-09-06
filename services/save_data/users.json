@@ -1,1 +1,14 @@
-{}
+{
+    "YoEnte": {
+        "password": "adminENTE2199",
+        "permission": "admin"
+    },
+    "Jp": {
+        "password": "k^&PU6pXvqF=",
+        "permission": "leitung"
+    },
+    "viewtest": {
+        "password": "test",
+        "permission": "view"
+    }
+}
