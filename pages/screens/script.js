@@ -37,8 +37,8 @@ var interval1000 = setInterval(function() {
             newSrc = images[slideShow.content[selected].image];
             console.log(newSrc);
 
-            screenCon.appendChild(newSrc);
             screenCon.removeChild(screenCon.firstElementChild);
+            screenCon.appendChild(newSrc);
 
         } else {
             counter++;
